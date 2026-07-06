@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MiniGPT HF</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="app">
+    <section class="panel">
+      <div class="brand">🤗</div>
+      <h1>MiniGPT HF</h1>
+      <label>Modo del asistente</label>
+        <select id="mode">
+        <option value="web" selected>Profesor de desarrollo web</option>
+        <option value="english">Tutor de inglés</option>
+        <option value="debug">Depurador de errores</option>
+        </select>
+
+        <label>Modelo seleccionado</label>
+        <select id="model">
+            <option value="meta" selected>Meta-llama 3.1</option>
+            <option value="mistralai">Mistral 7B</option>
+            <option value="qwen3-8B">Qwen 3 - 8B</option>
+            <option value="deepseek">Deepseek AI</option>
+            <option value="gemma">Google Gemma</option>
+            <option value="phi">Microsoft Phi</option>
+            <option value="tiny">Tiny Llama</option>
+        </select>
+      <button id="clearBtn">Limpiar chat</button>
+    </section>
+
+    <section class="chat">
+      <div id="messages" class="messages"></div>
+
+      <form id="chatForm" class="composer">
+        <textarea id="prompt" placeholder="Escribe tu pregunta..." rows="2"></textarea>
+        <button type="submit">Enviar</button>
+      </form>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
