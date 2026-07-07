@@ -35,7 +35,7 @@ const modelos={
     "deepseek":"deepseek-ai/DeepSeek-R1",
     "gemma":"google/gemma-3-12b-it",
     "phi":"microsoft/Phi-4",
-    "tiny":"TinyLlama/TinyLlama-1.1B-Chat-v1.0"
+    "gptOS":"openai/gpt-oss-20b"
 }
 app.get("/api/health", (req, res) => {
   res.json({
@@ -74,21 +74,25 @@ app.post("/api/chat", async (req, res) => {
     const modeloSeleccionado=modelos[modelo]
       console.log(modoSeleccionado)
       console.log(modeloSeleccionado)
-    const response = await hf.chatCompletion({
-      model: modeloSeleccionado,
-      messages: [
-        {
-          role: "system",
-          content: modoSeleccionado
-        },
-        ...safeMessages
-      ],
-      max_tokens: 500,
-      temperature: 0.7,
-      extra: {
-        provider: HF_PROVIDER
-      }
-    });
+    // Remueve "extra" del cuerpo principal
+const response = await hf.chatCompletion({
+  model: modeloSeleccionado,
+  messages: [
+    {
+      role: "system",
+      content: modoSeleccionado
+    },
+    ...safeMessages
+  ],
+  max_tokens: 500,
+  temperature: 0.7
+}, {
+  // Algunas versiones del SDK aceptan configuraciones de fetch/headers aquí
+  headers: {
+    "X-Hf-Provider": HF_PROVIDER // Formato de encabezado si tu proveedor lo exige
+  }
+});
+
 
     const answer = response.choices?.[0]?.message?.content || "No se recibió respuesta del modelo.";
 
